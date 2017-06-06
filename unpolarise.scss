@@ -1,0 +1,21 @@
+.btn-main-unpolarise {
+  border: 1px solid rgba(255, 79, 56, 0.3);
+  color: rgba(255, 79, 56, 0.8);
+  padding: 8px 24px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-radius:3px;
+  text-align: center; // centering the text in the button
+  &:hover {
+    color: rgba(255, 79, 56, 0.8);
+    background-color: rgba(255, 79, 56, 0.1);
+  }
+  &:active {
+    color: rgba(255, 79, 56, 0.8);
+  }
+  a {
+    color: rgba(255, 79, 56, 0.8);
+  }
+}
+
+
