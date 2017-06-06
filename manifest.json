@@ -7,7 +7,7 @@
   "content_scripts": [{
       "run_at" :"document_end",
       "matches": ["https://www.facebook.com/*"],
-      "js": ["unpolarise.js"],
+      "js": ["jquery.js", "unpolarise.js"],
       "css": ["unpolarise.css"]
     }],
   "browser_action": {
@@ -17,6 +17,9 @@
   },
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "https://requestb.in/",
+    // "http://localhost:3000"
+    // TODO: add the app url here
   ]
 }
