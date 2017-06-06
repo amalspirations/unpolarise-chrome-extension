@@ -26,6 +26,7 @@
 //    fjs.parentNode.insertBefore(js, fjs);
 //  }(document, 'script', 'facebook-jssdk'));
 // // Get user id function
+// // Source: https://developers.facebook.com/docs/facebook-login/web#checklogin
 // FB.getLoginStatus(function(response) {
 //   if (response.status === 'connected') {
 //     console.log('Logged in.');
@@ -42,7 +43,8 @@ function getFeed() {
   var elements = document.getElementsByTagName("a");
   var links = [];
   for (var i = 0; i < elements.length; i++) {
-    links.push(elements[i].getAttribute("href"))
+    var link = (elements[i].getAttribute("href"));
+    if (link != "#") {links.push(link)};
   };
   return links;
 };
@@ -63,7 +65,7 @@ var data = JSON.stringify(feed);
 function sendFeed() {
   $.ajax({
     type: "POST",
-    url: '', // To be updated, temporarily use: https://requestb.in/
+    url: 'https://requestb.in/1lxytcr1', // To be updated, temporarily use: https://requestb.in/
     data: data,
     success: function() {
       console.log(data);
