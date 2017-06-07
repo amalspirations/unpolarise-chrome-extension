@@ -16,10 +16,8 @@
     "default_title": "Click here!"
   },
   "permissions": [
-    // TODO delete "http://localhost:3000",
-    // TODO add the app url here
+    "https://unpolarise.herokuapp.com/links",
     "activeTab",
-    "https://ajax.googleapis.com/",
-    "https://requestb.in/"
+    "https://ajax.googleapis.com/"
   ]
 }
