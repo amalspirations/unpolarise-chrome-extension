@@ -1,8 +1,7 @@
 // STEPS
 // 1. Open Facebook home and get user id
-// 2. Get links from Facebook home feed
-// 3. Filter out ads / sponsored content / internal links
-// 4. Post request to App
+// 2. Get external links from Facebook home feed
+// 3. Post request to App
 
 /* TODO Delete */ console.log("Welcome!");
 
@@ -38,36 +37,27 @@
 //   }
 // });
 
-// 2. Get links from Facebook home feed
+// 2. Get external links from Facebook home feed
 function getFeed() {
   var elements = document.getElementsByTagName("a");
   var links = [];
-  var regexp = /"#(.+)?"|"(https:\/\/www\.)?facebook\.com(.+)?"|"\/(.+)"/
+  var regexpLinks = /l\.facebook\.com\/l\./;
   for (var i = 0; i < elements.length; i++) {
     var link = (elements[i].getAttribute("href"));
-    if (link != unwantedLinks) {links.push(link)};
+    if (link != null && regexpLinks.exec(link) != null) {links.push(link)};
   };
-  // var regexp = /"#(.+)?"|"(https:\/\/www\.)?facebook\.com(.+)?"|"\/(.+)"/
-  // for (var i = 0; i < elements.length; i++) {
-  //   var link = (elements[i].getAttribute("href"));
-  //   (link != null && typeof(link) === "string" && regexp.exec(link) === null) {links.push(link)};
-  // };
   return links;
 };
+
 /* TODO Delete */ console.log("Gathering feed data...");
-var links = getFeed();
+var links = getFeed(); // links is an array
 
-// 3. Filter out ads / sponsored content / internal links
-// TODO
-
-
-// 4. Post request to App
+// 3. Post request to App
 var feed = {"user_id": "To be updated", "links": links};
 var data = JSON.stringify(feed);
 
 /* TODO Delete */ console.log("Submitting for analysis...");
 
-// Post request to website
 function sendFeed() {
   $.ajax({
     type: "POST",
@@ -87,5 +77,5 @@ sendFeed();
 /* TODO Delete */ console.log("Done!!!");
 
 
-// TEST: prepending in home feed $('#stream_pagelet').prepend('link to app');
+// TEST prepending in home feed $('#stream_pagelet').prepend('link to app');
 
