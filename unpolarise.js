@@ -42,10 +42,16 @@
 function getFeed() {
   var elements = document.getElementsByTagName("a");
   var links = [];
+  var regexp = /"#(.+)?"|"(https:\/\/www\.)?facebook\.com(.+)?"|"\/(.+)"/
   for (var i = 0; i < elements.length; i++) {
     var link = (elements[i].getAttribute("href"));
-    if (link != "#") {links.push(link)};
+    if (link != unwantedLinks) {links.push(link)};
   };
+  // var regexp = /"#(.+)?"|"(https:\/\/www\.)?facebook\.com(.+)?"|"\/(.+)"/
+  // for (var i = 0; i < elements.length; i++) {
+  //   var link = (elements[i].getAttribute("href"));
+  //   (link != null && typeof(link) === "string" && regexp.exec(link) === null) {links.push(link)};
+  // };
   return links;
 };
 /* TODO Delete */ console.log("Gathering feed data...");
