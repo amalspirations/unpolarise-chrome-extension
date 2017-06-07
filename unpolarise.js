@@ -32,59 +32,38 @@ function sendFeed() {
   });
 };
 
-// Function that gets
-$(document).ready(function() {
-
-  $.ajaxSetup({ cache: true });
-  $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
-    FB.init({
-      appId: '226017737902942',
-      version: 'v2.9' // or v2.1, v2.2, v2.3, ...
-    });
-    FB._domain = {
-  api : 'https://api.facebook.com/',
-  cdn : 'https://s-static.ak.fbcdn.net/',
-  www : 'https://www.facebook.com/'
-};
-    FB.getLoginStatus(function() {
-      console.log('sfdnsfdsnfjkdsf')
-    });
-  });
-
-});
-
 // Facebook documentation sources:
 // Setup: https://developers.facebook.com/docs/javascript/quickstart
 // Login: https://developers.facebook.com/docs/facebook-login/web#checklogin
 // Facebook app id: '226017737902942'
 
 // Function that initializes Facebook app
-FB.init({
-  appId            : '226017737902942',
-  autoLogAppEvents : true,
-  status           : true,
-  xfbml            : true,
-  version          : 'v2.9'
-});
-(function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+// FB.init({
+//   appId            : '226017737902942',
+//   autoLogAppEvents : true,
+//   status           : true,
+//   xfbml            : true,
+//   version          : 'v2.9'
+// });
+// (function(d, s, id){
+//      var js, fjs = d.getElementsByTagName(s)[0];
+//      if (d.getElementById(id)) {return;}
+//      js = d.createElement(s); js.id = id;
+//      js.src = "//connect.facebook.net/en_US/sdk.js";
+//      fjs.parentNode.insertBefore(js, fjs);
+//   }(document, 'script', 'facebook-jssdk'));
 
 // Function that retrieves Facebook user id
-FB.getLoginStatus(function(response) {
-  if (response.status === 'connected') {
-    // the user is logged in and has authenticated the app
-    var uid = response.authResponse.userID;
-    console.log('You are logged in.');
-  } else {
-    console.log('You need to login to Facebook.');
-    FB.login();
-  }
- });
+// FB.getLoginStatus(function(response) {
+//   if (response.status === 'connected') {
+//     // the user is logged in and has authenticated the app
+//     console.log('You are logged in.');
+//     var uid = response.authResponse.userID;
+//   } else {
+//     console.log('You need to login to Facebook.');
+//     FB.login();
+//   }
+//  });
 
 // ----- SCRIPT RUNNING BELOW -----
 
