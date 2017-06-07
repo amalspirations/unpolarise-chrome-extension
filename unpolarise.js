@@ -61,7 +61,7 @@ var data = JSON.stringify(feed);
 function sendFeed() {
   $.ajax({
     type: "POST",
-    url: 'https://requestb.in/1lxytcr1', // To be updated, temporarily use: https://requestb.in/
+    url: '', // To be updated, temporarily use: https://requestb.in/
     data: data,
     success: function() {
       console.log(data);
