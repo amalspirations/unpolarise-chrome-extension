@@ -3,7 +3,13 @@
 // 2. Get external links from Facebook home feed
 // 3. Send post request to App
 
-// ----- FUNCTIONS TO BE CALLED -----
+// ----- GLOBAL VARIABLES AND FUNCTIONS TO BE CALLED -----
+
+// Global variables
+var uid = 'dummy' // Facebook ID
+var unpolariseUrl = /unpolarise\.herokuapp\.com/;
+var facebookUrl = /facebook\.com/;
+var currentUrl = location.href;
 
 // Function that gets external links from Facebook home feed
 function getFeed() {
@@ -35,56 +41,75 @@ function sendFeed() {
 // Facebook documentation sources:
 // Setup: https://developers.facebook.com/docs/javascript/quickstart
 // Login: https://developers.facebook.com/docs/facebook-login/web#checklogin
-// Facebook app id: '226017737902942'
+function getFacebookId() {
+  var apiLoaded = false;
 
-// Function that initializes Facebook app
-// FB.init({
-//   appId            : '226017737902942',
-//   autoLogAppEvents : true,
-//   status           : true,
-//   xfbml            : true,
-//   version          : 'v2.9'
-// });
-// (function(d, s, id){
-//      var js, fjs = d.getElementsByTagName(s)[0];
-//      if (d.getElementById(id)) {return;}
-//      js = d.createElement(s); js.id = id;
-//      js.src = "//connect.facebook.net/en_US/sdk.js";
-//      fjs.parentNode.insertBefore(js, fjs);
-//   }(document, 'script', 'facebook-jssdk'));
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 
-// Function that retrieves Facebook user id
-// FB.getLoginStatus(function(response) {
-//   if (response.status === 'connected') {
-//     // the user is logged in and has authenticated the app
-//     console.log('You are logged in.');
-//     var uid = response.authResponse.userID;
-//   } else {
-//     console.log('You need to login to Facebook.');
-//     FB.login();
-//   }
-//  });
+  window.fbAsyncInit = function() {
+    while (apiLoaded === false) {
+      FB.init({
+        appId      : '226017737902942',
+        status     : true,
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.9'
+      });
+    apiLoaded = true;  //  <---- THIS RIGHT HERE TRIGGERS A CUSTOM EVENT CALLED 'fbload'
+    };
+  };
 
-// ----- SCRIPT RUNNING BELOW -----
+  //MEANWHILE IN $(document).ready()
+  if (apiLoaded) {
+    FB.getLoginStatus(function(response) {
+      console.log(response);
+      });
+    };
+};
 
-/* TODO Delete */ console.log("Welcome!");
+// ----- SCRIPT RUNNING -----
 
-/* TODO Delete */ console.log("Searching Facebook user ID...");
+// Script when active tab is unpolarise (runs until uid received)
+// while (uid === 'dummy') {
+  if (unpolariseUrl.exec(currentUrl)) {
+    /* TODO Delete */ console.log("Requesting your Facebook user ID...");
+    // setTimout(
+      getFacebookId()
+      // , 3000);
+  };
+// };
 
-// TODO Call function that searches Facebook ID
+// Script when active tab is Facebook (runs every hour)
+if (uid != 'dummy' && facebookUrl.exec(currentUrl)) {
+  // setInterval({
+    /* TODO Delete */ console.log("Welcome!");
+    /* TODO Delete */ console.log("Your Facebook  ID: " + uid);
+    /* TODO Delete */ console.log("Gathering feed data...");
+    var urls = getFeed(); // urls is an array
+    var feed = {"uid": uid, "urls": urls};
+    /* TODO Delete */ console.log("Submitting for analysis...");
+    sendFeed();
+    /* TODO Delete */ console.log("Done!!!");
+  // }, 3600000 );
+};
 
-/* TODO Delete */ console.log("Gathering feed data...");
+// ----- POP UP USER JOURNEYS -----
+// Link to sign up on unpolarize if not registered
+if (uid === 'dummy') { $("#btn").html('<a href="https://unpolarise.herokuapp.com/users/sign_up">Sign up to unpolarise</a>') }
+// Link to get analysis if logged in on Facebook
+else if (facebookUrl.exec(currentUrl)) { $("#btn").html('<a href="https://unpolarise.herokuapp.com/analytics">Get Facebook Feed Analytics</a>') }
+// Link to open Facebook when registered on website
+else { $("#btn").html('<a href="https://www.facebook.com/">Screen Facebook Feed</a>') };
 
-var urls = getFeed(); // urls is an array
-
-var feed = {"uid": "10155031040388001", "urls": urls};
-// // TODO Replace uid with actual uid
-
-/* TODO Delete */ console.log("Submitting for analysis...");
-
-sendFeed();
-
-/* TODO Delete */ console.log("Done!!!");
-
+// ----- CHERRY ON THE CAKE -----
 // TODO prepend in home feed $('#stream_pagelet').prepend('link to app');
+
+
+
 
