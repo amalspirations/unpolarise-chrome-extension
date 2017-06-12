@@ -1,27 +1,29 @@
 // Constants
-var left = 1.0
-var c_left = 0.25
-var c_right = -0.25
-var right = -1.0
+var delay = 1;
+// Political Constants
+var left = 1.0;
+var c_left = 0.25;
+var c_right = -0.25;
+var right = -1.0;
 // Pages
-var pages = [//{name: "Syriza", source_score: left, url_component: "syrizaofficial"},
-//               {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
-              // {name: "Jeremy Corbyn", source_score: left, url_component: "JeremyCorbynMP"},
-              // {name: "Communist Party", source_score: left, url_component: "communism101"},
-              // {name: "Labour Party", source_score: c_left, url_component: "labourparty"},
-              // {name: "Barack Obama", source_score: c_left, url_component: "barackobama"},
-              // {name: "Bernie Sanders", source_score: c_left, url_component: "berniesanders"},
-              // {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
-              // {name: "Sadiq Khan", source_score: c_left, url_component: "sadiqforlondon"},
-              // {name: "Daily Show", source_score: c_left, url_component: "dailyshow"},
-              // {name: "Conservative Party", source_score: c_right, url_component: "conservatives"},
-              // {name: "David Cameron", source_score: c_right, url_component: "DavidCameronOfficial"},
-              // {name: "Boris Johnson", source_score: c_right, url_component: "borisjohnson"},
-              // {name: "Jeremy Kyle", source_score: c_right, url_component: "Jeremykyle"},
-              // {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
-              // {name: "Nigel Farage", source_score: right, url_component: "nigelfarageofficial"},
-              // {name: "UKIP", source_score: right, url_component: "UKIP"},
-              // {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
+var pages = [ {name: "Syriza", source_score: left, url_component: "syrizaofficial"},
+              {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
+              {name: "Jeremy Corbyn", source_score: left, url_component: "JeremyCorbynMP"},
+              {name: "Communist Party", source_score: left, url_component: "communism101"},
+              {name: "Labour Party", source_score: c_left, url_component: "labourparty"},
+              {name: "Barack Obama", source_score: c_left, url_component: "barackobama"},
+              {name: "Bernie Sanders", source_score: c_left, url_component: "berniesanders"},
+              {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
+              {name: "Sadiq Khan", source_score: c_left, url_component: "sadiqforlondon"},
+              {name: "Daily Show", source_score: c_left, url_component: "thedailyshow"},
+              {name: "Conservative Party", source_score: c_right, url_component: "conservatives"},
+              {name: "David Cameron", source_score: c_right, url_component: "DavidCameronOfficial"},
+              {name: "Boris Johnson", source_score: c_right, url_component: "borisjohnson"},
+              {name: "Jeremy Kyle", source_score: c_right, url_component: "Jeremykyle"},
+              {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
+              {name: "Nigel Farage", source_score: right, url_component: "nigelfarageofficial"},
+              {name: "UKIP", source_score: right, url_component: "UKIP"},
+              {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
               {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
 ];
 
@@ -60,15 +62,14 @@ function getNumberOfPageLikes(url, done) {
 /**
  * Main code that is run when the button is pressed
  */
-document.getElementById("btn-collect").addEventListener('click', () => {
+function createObjectOfPageDetails() {
   pages.forEach( function(page) {
     var url = "https://mbasic.facebook.com/" + page.url_component + "/socialcontext";
     // var array = [];
     // Make GET request and count people on page (i.e. the number of friends who have liked)
-    var test2 = getNumberOfPageLikes(url, function(count) {
-      // array.push(count);
-      pages[page.name] = count;
+    getNumberOfPageLikes(url, function(count) {
+      page[page.name] = count;
     });
   });
-  console.log("This is the counts: " + array);
-});
+  return pages;
+};
