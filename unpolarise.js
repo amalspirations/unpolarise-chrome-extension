@@ -1,15 +1,20 @@
 // ----- STEPS -----
-// 1. Open Facebook home and get user id
+// 1. Open Facebook home and get user
 // 2. Get external links from Facebook home feed
 // 3. Send post request to App
 
 // ----- GLOBAL VARIABLES AND FUNCTIONS TO BE CALLED -----
-
 // Global variables
-var email = 'dummy' // Facebook ID
 var unpolariseUrl = /unpolarise\.herokuapp\.com/;
-var facebookUrl = /facebook\.com/;
+var facebookUrl = /facebook\.com\/?$/;
 var currentUrl = location.href;
+var name = ''
+
+// Function that returns user Facebook full name as displayed
+function getUser() {
+  while  (name === '') { name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
+  return name
+};
 
 // Function that gets external links from Facebook home feed
 function getFeed() {
@@ -27,7 +32,7 @@ function getFeed() {
 function sendFeed() {
   $.ajax({
     type: "POST",
-    url: 'https://unpolarise.herokuapp.com/links', // DEVELOPMENT: use 'https://requestb.in/'
+    url: 'https://unpolarise.herokuapp.com/links',
     data: feed,
     success: function() {
       console.log(feed);
@@ -40,30 +45,17 @@ function sendFeed() {
 
 // ----- SCRIPT RUNNING -----
 
-// ----- POP UP USER JOURNEYS -----
-var x = document.getElementById('submit');
-x.onclick = function() {
-  email = document.getElementById('user-email').value;
-  console.log(email);
-}
-
-// Link to sign up on unpolarize if not registered
-if (email === 'dummy') { $("#btn").html('<a href="https://unpolarise.herokuapp.com/users/sign_up">Sign up to unpolarise</a>') }
-// Link to get analysis if logged in on Facebook
-else { $("#form").empty();
-   if (facebookUrl.exec(currentUrl)) { $("#btn").html('<a href="https://unpolarise.herokuapp.com/analytics">Get Facebook Feed Analytics</a>') }
-  // Link to open Facebook when registered on website
-  else { $("#btn").html('<a href="https://www.facebook.com/">Screen Facebook Feed</a>') }
-};
-
 // Script when active tab is Facebook (runs every hour)
-if (email != 'dummy' && facebookUrl.exec(currentUrl)) {
+if (facebookUrl.exec(currentUrl)) {
   // setInterval({
     /* TODO Delete */ console.log("Welcome!");
-    /* TODO Delete */ console.log("Your Facebook ID: " + email);
+    name = getUser();
+    /* TODO Delete */ console.log("Your Facebook name: " + name);
     /* TODO Delete */ console.log("Gathering feed data...");
     var urls = getFeed(); // urls is an array
-    var feed = {"email": email, "urls": urls};
+    var feed = {"name": name, "urls": urls};
+    /* TODO Delete */ console.log("Data sent for analysis: ");
+    /* TODO Delete */ console.log(feed);
     /* TODO Delete */ console.log("Submitting for analysis...");
     sendFeed();
     /* TODO Delete */ console.log("Done!!!");
