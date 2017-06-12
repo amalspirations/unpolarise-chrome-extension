@@ -17,26 +17,26 @@ var c_left = 0.25;
 var c_right = -0.25;
 var right = -1.0;
 // Pages
-var pages = [ {name: "Syriza", source_score: left, url_component: "syrizaofficial"},
-              {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
-              {name: "Jeremy Corbyn", source_score: left, url_component: "JeremyCorbynMP"},
-              {name: "Communist Party", source_score: left, url_component: "communism101"},
-              {name: "Labour Party", source_score: c_left, url_component: "labourparty"},
-              {name: "Barack Obama", source_score: c_left, url_component: "barackobama"},
-              {name: "Bernie Sanders", source_score: c_left, url_component: "berniesanders"},
-              {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
-              {name: "Sadiq Khan", source_score: c_left, url_component: "sadiqforlondon"},
-              {name: "Daily Show", source_score: c_left, url_component: "thedailyshow"},
-              {name: "Conservative Party", source_score: c_right, url_component: "conservatives"},
-              {name: "David Cameron", source_score: c_right, url_component: "DavidCameronOfficial"},
-              {name: "Boris Johnson", source_score: c_right, url_component: "borisjohnson"},
-              {name: "Jeremy Kyle", source_score: c_right, url_component: "Jeremykyle"},
-              {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
-              {name: "Nigel Farage", source_score: right, url_component: "nigelfarageofficial"},
-              {name: "UKIP", source_score: right, url_component: "UKIP"},
-              {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
-              {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
-];
+var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syrizaofficial"},
+              "Melenchon": {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
+              "Corbyn": {name: "Jeremy Corbyn", source_score: left, url_component: "JeremyCorbynMP"},
+              "Communist": {name: "Communist Party", source_score: left, url_component: "communism101"},
+              "Labour": {name: "Labour Party", source_score: c_left, url_component: "labourparty"},
+              "Obama": {name: "Barack Obama", source_score: c_left, url_component: "barackobama"},
+              "Sanders": {name: "Bernie Sanders", source_score: c_left, url_component: "berniesanders"},
+              "Clinton": {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
+              "Sadiq": {name: "Sadiq Khan", source_score: c_left, url_component: "sadiqforlondon"},
+              "DailyShow": {name: "Daily Show", source_score: c_left, url_component: "thedailyshow"},
+              "Conservative": {name: "Conservative Party", source_score: c_right, url_component: "conservatives"},
+              "Cameron": {name: "David Cameron", source_score: c_right, url_component: "DavidCameronOfficial"},
+              "Boris": {name: "Boris Johnson", source_score: c_right, url_component: "borisjohnson"},
+              "Kyle": {name: "Jeremy Kyle", source_score: c_right, url_component: "Jeremykyle"},
+              "LePen": {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
+              "Farage": {name: "Nigel Farage", source_score: right, url_component: "nigelfarageofficial"},
+              "UKIP": {name: "UKIP", source_score: right, url_component: "UKIP"},
+              "BNP": {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
+              "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
+};
 
 /**
  * Function that returns user Facebook full name as displayed
@@ -69,9 +69,10 @@ function sendFeed(url, message) {
     url: url,
     data: message,
     success: function() {
-      console.log(message);
+      console.log("Wahoooooooooo!!!");
     },
     error: function(error) {
+      console.log("The AJAX request failed with the following:");
       console.log(error.statusText);
     }
   });
@@ -112,12 +113,12 @@ function getNumberOfPageLikes(url, done) {
  * Function that calls the others to get a hash which includes the page counts
  */
 function createObjectOfPageDetails() {
-  pages.forEach( function(page) {
-    var url = "https://mbasic.facebook.com/" + page.url_component + "/socialcontext";
+  Object.keys(pages).forEach( function(key, index) {
+    var url = "https://mbasic.facebook.com/" + pages[key].url_component + "/socialcontext";
     // var array = [];
     // Make GET request and count people on page (i.e. the number of friends who have liked)
     getNumberOfPageLikes(url, function(count) {
-      page[page.name] = count;
+      pages[key]["count"] = count;
     });
   });
   return pages;
@@ -125,36 +126,38 @@ function createObjectOfPageDetails() {
 
 // ---------- SCRIPT RUNNING ----------
 
-// // Script when active tab is Facebook (runs every hour)
-// if (facebookUrl.exec(currentUrl)) {
-//   // setInterval({
-//     /* TODO Delete */ console.log("Welcome!");
-//     name = getUser();
-//     /* TODO Delete */ console.log("Your Facebook name: " + name);
-//     /* TODO Delete */ console.log("Gathering feed data...");
-//     var urls = getFeed(); // urls is an array
-//     var feed = {"name": name, "urls": urls};
-//     /* TODO Delete */ console.log("Data sent for analysis: ");
-//     /* TODO Delete */ console.log(feed);
-//     /* TODO Delete */ console.log("Submitting for analysis...");
-//     sendFeed('https://unpolarise.herokuapp.com/links', feed);
-//     /* TODO Delete */ console.log("Done!!!");
-//   // }, 3600000 );
-// };
+// Script when active tab is Facebook (runs every hour)
+if (facebookUrl.exec(currentUrl)) {
+  // setInterval({
+    /* TODO Delete */ console.log("Welcome!");
+    name = getUser();
+    /* TODO Delete */ console.log("Your Facebook name: " + name);
+    /* TODO Delete */ console.log("Gathering feed data...");
+    var urls = getFeed(); // urls is an array
+    var feed = {"name": name, "urls": urls};
+    /* TODO Delete */ console.log("Data sent for analysis: ");
+    /* TODO Delete */ console.log(feed);
+    /* TODO Delete */ console.log("Submitting for analysis...");
+    sendFeed('https://unpolarise.herokuapp.com/links', feed);
+    /* TODO Delete */ console.log("Done!!!");
+  // }, 3600000 );
+};
 
 $(document).ready(function () {
   if (facebookUrl.exec(currentUrl)) {
     // setInterval({
       console.log("Welcome!");
-      name = getUser();
-      /* TODO Delete */ console.log("Your Facebook name: " + name);
+      // name = getUser();
+      // /* TODO Delete */ console.log("Your Facebook name: " + name);
       /* TODO Delete */ console.log("Gathering feed data...");
-      var likes_array = createObjectOfPageDetails();
-      var feed = {"name": name, "likes_array": likes_array};
+      var likes_hash = createObjectOfPageDetails();
+      var likes_hash = {test: "test"};
+      // var feed = {"name": "Edward", "likes_array": likes_array};
+      var feed = {"name": "Edward", "likes_array": likes_hash };
       /* TODO Delete */ console.log("Data sent for analysis: ");
       /* TODO Delete */ console.log(feed);
       /* TODO Delete */ console.log("Submitting for analysis...");
-      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', feed);
+      sendFeed('https://requestb.in/sofvhkso', feed); // facebook_pages
       /* TODO Delete */ console.log("Done!!!");
     // }, 3600000 );
   };
