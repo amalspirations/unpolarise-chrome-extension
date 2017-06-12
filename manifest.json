@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "unpolarise",
   "description": "This extension reads external links shared on Facebook news feed page",
-  "version": "1.0",
+  "version": "0.0.0.1",
   "permissions": ["tabs", "activeTab", "https://www.facebook.*", "https://unpolarise.herokuapp.com*", "//connect.facebook.net/en_US/sdk.js"],
   "content_scripts": [{
       "run_at" :"document_end",
