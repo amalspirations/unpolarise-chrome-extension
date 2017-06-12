@@ -43,7 +43,7 @@ var pages = [ {name: "Syriza", source_score: left, url_component: "syrizaofficia
  */
 function getUser() {
   while  (name === '') { name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
-  return name
+  return name;
 };
 
 /**
@@ -125,28 +125,40 @@ function createObjectOfPageDetails() {
 
 // ---------- SCRIPT RUNNING ----------
 
-// Script when active tab is Facebook (runs every hour)
-if (facebookUrl.exec(currentUrl)) {
-  // setInterval({
-    /* TODO Delete */ console.log("Welcome!");
-    name = getUser();
-    /* TODO Delete */ console.log("Your Facebook name: " + name);
-    /* TODO Delete */ console.log("Gathering feed data...");
-    var urls = getFeed(); // urls is an array
-    var feed = {"name": name, "urls": urls};
-    /* TODO Delete */ console.log("Data sent for analysis: ");
-    /* TODO Delete */ console.log(feed);
-    /* TODO Delete */ console.log("Submitting for analysis...");
-    sendFeed('https://unpolarise.herokuapp.com/links', feed);
-    /* TODO Delete */ console.log("Done!!!");
-  // }, 3600000 );
-};
-if (facebookUrl.exec(currentUrl)) {
-  // setInterval({
-  var likes_array = createObjectOfPageDetails();
-  sendFeed('https://unpolarise.herokuapp.com/facebook_pages', likes_array);
-  // }, 3600000 );
-};
+// // Script when active tab is Facebook (runs every hour)
+// if (facebookUrl.exec(currentUrl)) {
+//   // setInterval({
+//     /* TODO Delete */ console.log("Welcome!");
+//     name = getUser();
+//     /* TODO Delete */ console.log("Your Facebook name: " + name);
+//     /* TODO Delete */ console.log("Gathering feed data...");
+//     var urls = getFeed(); // urls is an array
+//     var feed = {"name": name, "urls": urls};
+//     /* TODO Delete */ console.log("Data sent for analysis: ");
+//     /* TODO Delete */ console.log(feed);
+//     /* TODO Delete */ console.log("Submitting for analysis...");
+//     sendFeed('https://unpolarise.herokuapp.com/links', feed);
+//     /* TODO Delete */ console.log("Done!!!");
+//   // }, 3600000 );
+// };
+
+$(document).ready(function () {
+  if (facebookUrl.exec(currentUrl)) {
+    // setInterval({
+      console.log("Welcome!");
+      name = getUser();
+      /* TODO Delete */ console.log("Your Facebook name: " + name);
+      /* TODO Delete */ console.log("Gathering feed data...");
+      var likes_array = createObjectOfPageDetails();
+      var feed = {"name": name, "likes_array": likes_array};
+      /* TODO Delete */ console.log("Data sent for analysis: ");
+      /* TODO Delete */ console.log(feed);
+      /* TODO Delete */ console.log("Submitting for analysis...");
+      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', feed);
+      /* TODO Delete */ console.log("Done!!!");
+    // }, 3600000 );
+  };
+});
 
 // ----- CHERRY ON THE CAKE -----
 // TODO prepend in home feed $('#stream_pagelet').prepend('link to app');
