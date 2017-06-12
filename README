@@ -1,0 +1,5 @@
+Chrome extension that screens Facebook home feed to extract information on the news consumed.
+
+The information collected consists of the user Facebook name and external links that appear on the Facebook home feed.
+
+Information is collected slolely by unpolarise from users with their consent, and is safely shared with unpolarise platform. The analysis generated based on this information belongs to the user.
