@@ -1,9 +1,24 @@
 // ----- POP UP USER JOURNEYS -----
-// Link to sign up on unpolarize if not registered
-$("#btn").html('<a href="https://unpolarise.herokuapp.com/users/sign_up">Sign up to unpolarise</a>');
-// Link to get analysis if logged in on Facebook
-var currentUrl = location.href;
-var facebookUrl = /facebook\.com\/?$/;
-if (facebookUrl.exec(currentUrl)) { $("#btn").html('<a href="https://unpolarise.herokuapp.com/analytics">Get Facebook Feed Analytics</a>') }
-// Link to open Facebook when registered on website
-else { $("#btn").html('<a href="https://www.facebook.com/">Screen Facebook Feed</a>') };
+
+chrome.tabs.getSelected(null, function(tab) {
+  var currentUrl = tab.url;
+  var facebookUrl = /facebook\.com\/?$/;
+
+  if (facebookUrl.exec(currentUrl)) {
+  // Link to get analysis if tab open is facebook
+    $("#animation").html('<img id="gif" src="animation.svg">');
+    $("#btn").html('<a href="https://unpolarise.co.uk/analytics">Get Feed Analytics</a>');
+    $("#btn").on("click", function() {
+      window.open("https://unpolarise.co.uk/home", '_blank')
+    });
+  } else {
+  // Link to open Facebook home and launch analysis
+    $("#btn").html('<a href="https://www.facebook.com">Screen Facebook Feed</a>');
+    $("#btn").on("click", function() {
+      window.open("https://www.facebook.com", '_blank');
+    });
+  };
+});
+
+
+

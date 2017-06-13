@@ -9,12 +9,32 @@ var unpolariseUrl = /unpolarise\.herokuapp\.com/;
 var facebookUrl = /facebook\.com\/?$/;
 var currentUrl = location.href;
 var name = ''
+var email = ''
 
 // Function that returns user Facebook full name as displayed
 function getUser() {
   while  (name === '') { name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
   return name
 };
+
+// Function that returns user email address
+// function getEmail() {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'https://mbasic.facebook.com/settings/account/', true);
+//   if (xhr.readyState == 4) {
+//       status = xhr.status;
+//       if (status == 200) {
+//         successHandler && successHandler(xhr.response);
+//       } else {
+//         errorHandler && errorHandler(status);
+//       }
+//     }
+//   xhr.send();
+//   var email = xhr.split("email address", 2)[1];
+//   console.log(email);
+// };
+// getEmail();
+
 
 // Function that gets external links from Facebook home feed
 function getFeed() {
