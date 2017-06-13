@@ -2,23 +2,23 @@
   "manifest_version": 2,
   "name": "unpolarise",
   "description": "This extension reads external links shared on Facebook news feed page",
-  "version": "0.0.0.1",
-  "permissions": ["tabs", "activeTab", "https://www.facebook.*", "https://unpolarise.herokuapp.com*", "//connect.facebook.net/en_US/sdk.js"],
+  "version": "0.0.0.2",
+  "permissions": ["tabs", "activeTab", "https://www.facebook.*", "https://unpolarise.co.uk*", "https://unpolarise.herokuapp.com*", "storage"],
   "content_scripts": [{
       "run_at" :"document_end",
       "matches": ["<all_urls>"],
-      "js": ["jquery.js", "unpolarise.js", "popup.js"],
+      "js": ["jquery.js", "unpolarise.js"],
       "css": ["popup.css"],
       "all_frames": true
     }],
   "browser_action": {
-    "default_icon": "favicon.png",
+    "default_icon": "media/icon128.png",
     "default_popup": "popup.html",
     "default_title": "Click here!"
   },
-  // "icons": { "16": "icon16.png",
-  //          "48": "icon48.png",
-  //         "128": "icon128.png"},
+  "icons": { "16": "media/icon16.png",
+           "48": "media/icon48.png",
+          "128": "media/icon128.png"},
   "permissions": [
     "activeTab",
     "https://unpolarise.herokuapp.com/links",

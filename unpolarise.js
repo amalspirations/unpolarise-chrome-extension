@@ -1,17 +1,15 @@
 // ----- STEPS -----
 // 1. Open Facebook home and get user
-// 2. Get external links from Facebook home feed
+// 2. Get external links and pages likes from Facebook
 // 3. Send post request to App
 
 // ----- GLOBAL VARIABLES AND FUNCTIONS TO BE CALLED -----
 // Global variables
-var unpolariseUrl = /unpolarise\.herokuapp\.com/;
+var unpolariseUrl = /(unpolarise\.herokuapp\.com)|(unpolarise\.co\.uk)/;
 var facebookUrl = /facebook\.com\/?$/;
 var currentUrl = location.href;
 var name = ''
 
-// Timing
-var delay = 1;
 // Political Constants
 var left = 1.0;
 var c_left = 0.25;
@@ -44,8 +42,15 @@ var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syr
  * Function that returns user Facebook full name as displayed
  */
 function getUser() {
-  while  (name === '') { name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
+  while  (name === '' && document.getElementById('u_0_t')) { name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
   return name;
+};
+
+/**
+ * Function that returns user Facebook email
+ */
+function getEmail() {
+// TO DO
 };
 
 /**
@@ -65,14 +70,16 @@ function getFeed() {
 /**
  * Function that sends post request to app
  */
-function sendFeed(url, message) {
+function sendFeed(url, message, async, timeStamp) {
   $.ajax({
     type: "POST",
     url: url,
     data: message,
-    async: false,
+    async: async,
     success: function() {
-      console.log("Wahoooooooooo!!!");
+      /* TODO Delete */ console.log("Wahoooooooooo!!!");
+      localStorage[timeStamp] = new Date();
+      /* TODO Delete */ console.log("Timestamp saved. All done!");
     },
     error: function(error) {
       console.log("The AJAX request failed with the following:");
@@ -80,6 +87,7 @@ function sendFeed(url, message) {
     }
   });
 };
+
 /**
  * HTTP GET request function for the facebook page
  */
@@ -127,38 +135,47 @@ function createObjectOfPageDetails() {
   return pages;
 };
 
+
+/**
+ * Function that checks interval between updates sent to app through AJAX
+ */
+function checkInterval(timeStamp, interval) { // timeStamp = 'timeStampFeed' || 'timeStampLikes'
+  var lastTime = localStorage[timeStamp];
+  if (lastTime == null) { return true }
+  else { return ((new Date() - lastTime) >= (interval)) } // do (interval * 3600000) to convert to hours
+};
+
 // ---------- SCRIPT RUNNING ----------
 
-// // Script when active tab is Facebook (runs every hour)
-// if (facebookUrl.exec(currentUrl)) {
-//   // setInterval({
-//     /* TODO Delete */ console.log("Welcome!");
-//     name = getUser();
-//     /* TODO Delete */ console.log("Your Facebook name: " + name);
-//     /* TODO Delete */ console.log("Gathering feed data...");
-//     var urls = getFeed(); // urls is an array
-//     var feed = {"name": name, "urls": urls};
-//     /* TODO Delete */ console.log("Data sent for analysis: ");
-//     /* TODO Delete */ console.log(feed);
-//     /* TODO Delete */ console.log("Submitting for analysis...");
-//     sendFeed('https://unpolarise.herokuapp.com/links', feed);
-//     /* TODO Delete */ console.log("Done!!!");
-//   // }, 3600000 );
-// };
-
-$(document).ready(function () {
+$(document).ready(function(){
+  // Script when active tab is Facebook
   if (facebookUrl.exec(currentUrl)) {
-    // setInterval({
+    /* TODO Delete */ console.log("Welcome!");
+    name = getUser();
+    /* TODO Delete */ console.log("Your Facebook name: " + name);
+
+    // Collecting and sending Facebook home feed (every 2h)
+    if (checkInterval('timeStampFeed', 2)) {
+      /* TODO Delete */ console.log("Gathering feed data...");
+      var urls = getFeed(); // urls is an array
+      var feed = {"name": name, "urls": urls};
+      /* TODO Delete */ console.log("Data sent for analysis: ");
+      /* TODO Delete */ console.log(feed);
+      /* TODO Delete */ console.log("Submitting for analysis...");
+      var timeStampFeed = new Date();
+      sendFeed('https://unpolarise.herokuapp.com/links', feed, true, 'timeStampFeed');
+    };
+
+  // Collecting and sending Facebook pages likes (every 240h = 10 days)
+    if (checkInterval('timeStampLikes', 10)) {
       console.log("Counting your friends' likes on certain pages.");
-      name = getUser();
-      /* TODO Delete */ console.log("Your Facebook name: " + name);
       var likes_hash = createObjectOfPageDetails();
-      var feed = {"name": name, "likes_array": likes_hash };
+      var likes = {"name": name, "likes_array": likes_hash };
       console.log("Data sent for analysis: ");
-      console.log(feed);
+      console.log(likes);
       // sendFeed('http://testing.unpolarise.ultrahook.com', feed); // For local testing the deployed version
-      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', feed);
-    // }, 3600000 );
+      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', likes, false, 'timeStampLikes');
+    };
   };
 });
 
