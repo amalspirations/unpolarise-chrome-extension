@@ -6,7 +6,7 @@ chrome.tabs.getSelected(null, function(tab) {
 
   if (facebookUrl.exec(currentUrl)) {
   // Link to get analysis if tab open is facebook
-    $("#animation").html('<img id="gif" src="animation.svg">');
+    $("#animation").html('<img id="gif" src="media/animation.svg">');
     $("#btn").html('<a href="https://unpolarise.co.uk/analytics">Get Feed Analytics</a>');
     $("#btn").on("click", function() {
       window.open("https://unpolarise.co.uk/home", '_blank')

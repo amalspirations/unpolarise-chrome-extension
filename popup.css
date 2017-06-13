@@ -32,7 +32,6 @@
   border: none;
   padding: 10px 10px;
   margin: auto;
-/*  margin: 25px 10px;*/
   border-radius:3px;
   text-align: center;
   &:hover {
