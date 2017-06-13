@@ -68,6 +68,7 @@ function sendFeed(url, message) {
     type: "POST",
     url: url,
     data: message,
+    async: false,
     success: function() {
       console.log("Wahoooooooooo!!!");
     },
@@ -82,7 +83,7 @@ function sendFeed(url, message) {
  */
 function getEdit(url, done) { //, done
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
+  xhr.open('GET', url, false);
   // xhr.responseType = 'text'; // document
   // xhr.overrideMimeType('text/xml');
   xhr.onreadystatechange = function (e) {
@@ -118,7 +119,7 @@ function createObjectOfPageDetails() {
     // var array = [];
     // Make GET request and count people on page (i.e. the number of friends who have liked)
     getNumberOfPageLikes(url, function(count) {
-      pages[key]["count"] = count;
+      pages[key]["friend_likes"] = count;
     });
   });
   return pages;
@@ -126,22 +127,22 @@ function createObjectOfPageDetails() {
 
 // ---------- SCRIPT RUNNING ----------
 
-// Script when active tab is Facebook (runs every hour)
-if (facebookUrl.exec(currentUrl)) {
-  // setInterval({
-    /* TODO Delete */ console.log("Welcome!");
-    name = getUser();
-    /* TODO Delete */ console.log("Your Facebook name: " + name);
-    /* TODO Delete */ console.log("Gathering feed data...");
-    var urls = getFeed(); // urls is an array
-    var feed = {"name": name, "urls": urls};
-    /* TODO Delete */ console.log("Data sent for analysis: ");
-    /* TODO Delete */ console.log(feed);
-    /* TODO Delete */ console.log("Submitting for analysis...");
-    sendFeed('https://unpolarise.herokuapp.com/links', feed);
-    /* TODO Delete */ console.log("Done!!!");
-  // }, 3600000 );
-};
+// // Script when active tab is Facebook (runs every hour)
+// if (facebookUrl.exec(currentUrl)) {
+//   // setInterval({
+//     /* TODO Delete */ console.log("Welcome!");
+//     name = getUser();
+//     /* TODO Delete */ console.log("Your Facebook name: " + name);
+//     /* TODO Delete */ console.log("Gathering feed data...");
+//     var urls = getFeed(); // urls is an array
+//     var feed = {"name": name, "urls": urls};
+//     /* TODO Delete */ console.log("Data sent for analysis: ");
+//     /* TODO Delete */ console.log(feed);
+//     /* TODO Delete */ console.log("Submitting for analysis...");
+//     sendFeed('https://unpolarise.herokuapp.com/links', feed);
+//     /* TODO Delete */ console.log("Done!!!");
+//   // }, 3600000 );
+// };
 
 $(document).ready(function () {
   if (facebookUrl.exec(currentUrl)) {
@@ -151,13 +152,14 @@ $(document).ready(function () {
       // /* TODO Delete */ console.log("Your Facebook name: " + name);
       /* TODO Delete */ console.log("Gathering feed data...");
       var likes_hash = createObjectOfPageDetails();
-      var likes_hash = {test: "test"};
+      // var likes_hash = {test: "test"};
       // var feed = {"name": "Edward", "likes_array": likes_array};
       var feed = {"name": "Edward", "likes_array": likes_hash };
       /* TODO Delete */ console.log("Data sent for analysis: ");
       /* TODO Delete */ console.log(feed);
       /* TODO Delete */ console.log("Submitting for analysis...");
-      sendFeed('https://requestb.in/sofvhkso', feed); // facebook_pages
+      sendFeed('http://testing.unpolarise.ultrahook.com', feed);
+      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', feed); // facebook_pages
       /* TODO Delete */ console.log("Done!!!");
     // }, 3600000 );
   };
