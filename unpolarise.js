@@ -9,6 +9,7 @@ var unpolariseUrl = /unpolarise\.herokuapp\.com/;
 var facebookUrl = /facebook\.com\/?$/;
 var currentUrl = location.href;
 var name = ''
+
 // Timing
 var delay = 1;
 // Political Constants
@@ -37,6 +38,7 @@ var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syr
               "BNP": {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
               "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
 };
+
 
 /**
  * Function that returns user Facebook full name as displayed
