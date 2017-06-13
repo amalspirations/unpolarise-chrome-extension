@@ -147,27 +147,18 @@ function createObjectOfPageDetails() {
 $(document).ready(function () {
   if (facebookUrl.exec(currentUrl)) {
     // setInterval({
-      console.log("Welcome!");
-      // name = getUser();
-      // /* TODO Delete */ console.log("Your Facebook name: " + name);
-      /* TODO Delete */ console.log("Gathering feed data...");
+      console.log("Counting your friends' likes on certain pages.");
+      name = getUser();
+      /* TODO Delete */ console.log("Your Facebook name: " + name);
       var likes_hash = createObjectOfPageDetails();
-      // var likes_hash = {test: "test"};
-      // var feed = {"name": "Edward", "likes_array": likes_array};
-      var feed = {"name": "Edward", "likes_array": likes_hash };
-      /* TODO Delete */ console.log("Data sent for analysis: ");
-      /* TODO Delete */ console.log(feed);
-      /* TODO Delete */ console.log("Submitting for analysis...");
-      sendFeed('http://testing.unpolarise.ultrahook.com', feed);
-      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', feed); // facebook_pages
-      /* TODO Delete */ console.log("Done!!!");
+      var feed = {"name": name, "likes_array": likes_hash };
+      console.log("Data sent for analysis: ");
+      console.log(feed);
+      // sendFeed('http://testing.unpolarise.ultrahook.com', feed); // For local testing the deployed version
+      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', feed);
     // }, 3600000 );
   };
 });
 
 // ----- CHERRY ON THE CAKE -----
 // TODO prepend in home feed $('#stream_pagelet').prepend('link to app');
-
-
-
-
