@@ -8,7 +8,7 @@
 var unpolariseUrl = /(unpolarise\.herokuapp\.com)|(unpolarise\.co\.uk)/;
 var facebookUrl = /facebook\.com\/?$/;
 var currentUrl = location.href;
-var name = ''
+var name = '';
 
 // Political Constants
 var left = 1.0;
@@ -42,15 +42,9 @@ var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syr
  * Function that returns user Facebook full name as displayed
  */
 function getUser() {
-  while  (name === '' && document.getElementById('u_0_t')) { name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
+  while  (name === '' && document.getElementById('u_0_t') || name.includes("_")) {
+    name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
   return name;
-};
-
-/**
- * Function that returns user Facebook email
- */
-function getEmail() {
-// TO DO
 };
 
 /**
@@ -70,11 +64,11 @@ function getFeed() {
 /**
  * Function that sends post request to app
  */
-function sendFeed(url, message, async, timeStamp) {
+function sendFeed(url, data, async, timeStamp) {
   $.ajax({
     type: "POST",
     url: url,
-    data: message,
+    data: data,
     async: async,
     success: function() {
       /* TODO Delete */ console.log("Wahoooooooooo!!!");
@@ -159,22 +153,25 @@ $(document).ready(function(){
       /* TODO Delete */ console.log("Gathering feed data...");
       var urls = getFeed(); // urls is an array
       var feed = {"name": name, "urls": urls};
-      /* TODO Delete */ console.log("Data sent for analysis: ");
+      /* TODO Delete */ console.log("Data submitted for analysis: ");
       /* TODO Delete */ console.log(feed);
-      /* TODO Delete */ console.log("Submitting for analysis...");
       var timeStampFeed = new Date();
-      sendFeed('https://unpolarise.herokuapp.com/links', feed, true, 'timeStampFeed');
+      setTimeout (
+        sendFeed('https://unpolarise.herokuapp.com/links', feed, true, 'timeStampFeed')
+      , 2000)
     };
 
   // Collecting and sending Facebook pages likes (every 240h = 10 days)
     if (checkInterval('timeStampLikes', 10)) {
-      console.log("Counting your friends' likes on certain pages.");
+      /* TODO Delete */ console.log("Counting your friends' likes on certain pages.");
       var likes_hash = createObjectOfPageDetails();
       var likes = {"name": name, "likes_array": likes_hash };
-      console.log("Data sent for analysis: ");
-      console.log(likes);
-      // sendFeed('http://testing.unpolarise.ultrahook.com', feed); // For local testing the deployed version
-      sendFeed('https://unpolarise.herokuapp.com/facebook_pages', likes, false, 'timeStampLikes');
+      /* TODO Delete */ console.log("Data sent for analysis: ");
+      /* TODO Delete */ console.log(likes);
+      /* Testing only */ // sendFeed('http://testing.unpolarise.ultrahook.com', feed);
+      setTimeout (
+        sendFeed('https://unpolarise.herokuapp.com/facebook_pages', likes, false, 'timeStampLikes')
+        , 2000)
     };
   };
 });
