@@ -11,7 +11,7 @@
   margin: auto;
 }
 
-#logo, img {
+#logo img {
   width: 80%;
   margin: auto;
   display: block;
@@ -42,7 +42,7 @@
   }
 }
 
-#btn, a {
+#btn a {
   margin: auto;
   text-decoration: none;
   color: #fbfbf9;
