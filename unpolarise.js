@@ -36,7 +36,8 @@ var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syr
               "BNP": {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
               "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
 };
-
+// Regex to get the name from Facebook
+// var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u']
 
 /**
  * Function that returns user Facebook full name as displayed
@@ -59,6 +60,24 @@ function getUser2() {
         name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
       } else if (document.getElementById('u_0_u')) {
         name = document.getElementById('u_0_u').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+      };
+    };
+    return name;
+  };
+};
+
+/**
+ * Function that returns user Facebook full name as displayed
+ * Assuming that the identifier u_0_? can take any letter
+ */
+function getUser3() {
+  while (name === '' || name.includes("_")) {
+    for (var i = 65; i <= 90; i++) { // 65 - 90
+      var fb_id = 'u_0_' + String.fromCharCode(i).toLowerCase();
+      if (document.getElementById(fb_id)) {
+        if (document.getElementById(fb_id).getElementsByTagName('a')[0] && document.getElementById(fb_id).getElementsByTagName('a')[0].getAttribute("aria-label") && (document.getElementById(fb_id).getElementsByTagName('a')[0].getAttribute("aria-label").substring(0, 10) === "Profile of")) {
+          name = document.getElementById(fb_id).getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+        };
       };
     };
     return name;
@@ -154,7 +173,7 @@ function createObjectOfPageDetails() {
 function checkInterval(timeStamp, interval) { // timeStamp = 'timeStampFeed' || 'timeStampLikes'
   var lastTime = localStorage[timeStamp];
   if (lastTime == null) { return true }
-  else { return ((new Date() - lastTime) >= (interval)) } // do (interval * 3600000) to convert to hours
+  else { return ((new Date() - lastTime) >= (interval)) } // 3600000 Convert to hours with 36000000
 };
 
 // ---------- SCRIPT RUNNING ----------
@@ -163,7 +182,7 @@ $(document).ready(function(){
   // Script when active tab is Facebook
   if (facebookUrl.exec(currentUrl)) {
     /* TODO Delete */ console.log("Welcome!");
-    name = getUser2();
+    name = getUser3();
     /* TODO Delete */ console.log("Your Facebook name: " + name);
 
     // Collecting and sending Facebook home feed (every 2h)
@@ -180,7 +199,7 @@ $(document).ready(function(){
     };
 
   // Collecting and sending Facebook pages likes (every 240h = 10 days)
-    if (checkInterval('timeStampLikes', 10)) {
+    if (checkInterval('timeStampLikes', 240)) {
       /* TODO Delete */ console.log("Counting your friends' likes on certain pages.");
       var likes_hash = createObjectOfPageDetails();
       var likes = {"name": name, "likes_array": likes_hash };
