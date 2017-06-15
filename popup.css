@@ -34,11 +34,14 @@
   margin: auto;
   border-radius:3px;
   text-align: center;
+  outline: none;
   &:hover {
     background-color: #fbfbf9;
+    outline: none;
   }
   &:active {
     background-color: #fbfbf9;
+    outline: none;
   }
   &:focus{
     outline: none;
@@ -49,12 +52,15 @@
   margin: auto;
   text-decoration: none;
   color: #fbfbf9;
+  outline: none;
   &:hover {
     color: rgba(255, 79, 56, 0.8);
+    outline: none;
   }
   &:active {
     color: rgba(255, 79, 56, 0.8);
     font-weight: bold;
+    outline: none;
   }
   &:focus{
     outline: none;
