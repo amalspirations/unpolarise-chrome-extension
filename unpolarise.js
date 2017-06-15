@@ -40,10 +40,26 @@ var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syr
 
 /**
  * Function that returns user Facebook full name as displayed
+ * Original Amal
  */
 function getUser() {
   while  (name === '' && document.getElementById('u_0_t') || name.includes("_")) {
     name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
+  return name;
+};
+
+/**
+ * Function that returns user Facebook full name as displayed
+ * Assuming either u_0_u or u_0_t
+ */
+function getUser2() {
+  if (name === '' && document.getElementById('u_0_t') || name.includes("_") ) {
+    if (document.getElementById('u_0_t').getElementsByTagName('a')[0] && document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label")) {
+      name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+    } else {
+      name = document.getElementById('u_0_u').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+    };
+  };
   return name;
 };
 
@@ -145,7 +161,7 @@ $(document).ready(function(){
   // Script when active tab is Facebook
   if (facebookUrl.exec(currentUrl)) {
     /* TODO Delete */ console.log("Welcome!");
-    name = getUser();
+    name = getUser2();
     /* TODO Delete */ console.log("Your Facebook name: " + name);
 
     // Collecting and sending Facebook home feed (every 2h)
