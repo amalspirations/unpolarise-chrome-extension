@@ -9,7 +9,7 @@ chrome.tabs.getSelected(null, function(tab) {
     $("#animation").html('<img id="gif" src="media/animation.svg">');
     $("#btn").html('<a href="https://unpolarise.co.uk/analytics">Get Feed Analytics</a>');
     $("#btn").on("click", function() {
-      window.open("https://unpolarise.co.uk", '_blank')
+      window.open("https://unpolarise.herokuapp.com/", '_blank')
     });
   } else {
   // Link to open Facebook home and launch analysis
