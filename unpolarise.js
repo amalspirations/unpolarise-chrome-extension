@@ -36,6 +36,8 @@ var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syr
               "BNP": {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
               "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
 };
+// Range of Charcodes
+var alphas = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 
 
 /**
@@ -51,6 +53,23 @@ function getUser() {
 /**
  * Function that returns user Facebook full name as displayed
  * Assuming either u_0_u or u_0_t holds the FB name
+ */
+function getUser2() {
+  while (name === '' || name.includes("_")) {
+    if (document.getElementById('u_0_t')) {
+      if (document.getElementById('u_0_t').getElementsByTagName('a')[0] && document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label")) {
+        name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+      } else if (document.getElementById('u_0_u')) {
+        name = document.getElementById('u_0_u').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+      };
+    };
+    return name;
+  };
+};
+
+/**
+ * Function that returns user Facebook full name as displayed
+ * Assuming that the identifier u_0_? can take any letter
  */
 function getUser2() {
   while (name === '' || name.includes("_")) {
