@@ -26,7 +26,7 @@
   display: block;
 }
 
-#btn {
+#unpolarise-btn {
   background-color: rgba(255, 79, 56, 0.8);
   border: 1px solid rgba(255, 79, 56, 0.8);
   border: none;
@@ -40,9 +40,12 @@
   &:active {
     background-color: #fbfbf9;
   }
+  &:focus{
+    outline: none;
+  }
 }
 
-#btn a {
+#unpolarise-btn a {
   margin: auto;
   text-decoration: none;
   color: #fbfbf9;
@@ -52,6 +55,9 @@
   &:active {
     color: rgba(255, 79, 56, 0.8);
     font-weight: bold;
+  }
+  &:focus{
+    outline: none;
   }
 }
 

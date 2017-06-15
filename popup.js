@@ -7,14 +7,14 @@ chrome.tabs.getSelected(null, function(tab) {
   if (facebookUrl.exec(currentUrl)) {
   // Link to get analysis if tab open is facebook
     $("#animation").html('<img id="gif" src="media/animation.svg">');
-    $("#btn").html('<a href="https://unpolarise.co.uk/analytics">Get Feed Analytics</a>');
-    $("#btn").on("click", function() {
+    $("#unpolarise-btn").html('<a href="https://unpolarise.co.uk/analytics">Get Feed Analytics</a>');
+    $("#unpolarise-btn").on("click", function() {
       window.open("http://unpolarise.co.uk/", '_blank')
     });
   } else {
   // Link to open Facebook home and launch analysis
-    $("#btn").html('<a href="https://www.facebook.com">Screen Facebook Feed</a>');
-    $("#btn").on("click", function() {
+    $("#unpolarise-btn").html('<a href="https://www.facebook.com">Screen Facebook Feed</a>');
+    $("#unpolarise-btn").on("click", function() {
       window.open("https://www.facebook.com", '_blank');
     });
   };
