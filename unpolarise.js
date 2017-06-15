@@ -50,17 +50,19 @@ function getUser() {
 
 /**
  * Function that returns user Facebook full name as displayed
- * Assuming either u_0_u or u_0_t
+ * Assuming either u_0_u or u_0_t holds the FB name
  */
 function getUser2() {
-  if (name === '' && document.getElementById('u_0_t') || name.includes("_") ) {
-    if (document.getElementById('u_0_t').getElementsByTagName('a')[0] && document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label")) {
-      name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
-    } else {
-      name = document.getElementById('u_0_u').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+  while (name === '' || name.includes("_")) {
+    if (document.getElementById('u_0_t')) {
+      if (document.getElementById('u_0_t').getElementsByTagName('a')[0] && document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label")) {
+        name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+      } else if (document.getElementById('u_0_u')) {
+        name = document.getElementById('u_0_u').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
+      };
     };
+    return name;
   };
-  return name;
 };
 
 /**
