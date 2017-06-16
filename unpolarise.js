@@ -36,7 +36,7 @@ var pages = { // UK
               "Clinton": {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
               "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"},
               // France
-              "France Insoumise": {name: "La France Insoumise", source_score: left, url_component: "lafranceinsoumise"}
+              "France Insoumise": {name: "La France Insoumise", source_score: left, url_component: "lafranceinsoumise"},
               "Melenchon": {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
               "Cheminade": {name: "Jaques Cheminade", source_score: left, url_component: "JCheminade"},
               "Poutou": {name: "Philippe Poutou", source_score: left, url_component: "poutou.philippe"},
@@ -55,7 +55,7 @@ var pages = { // UK
               "LePen": {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
               "FN": {name: "Front National", source_score: right, url_component: "FN.officiel"},
               "Dupont-Aignan": {name: "Nicolas Dupont-Aignan", source_score: right, url_component: "nicolasdupontaignan"},
-              "Asselineau": {name: "Francois Asselineau", source_score: right, url_component: "asselineau"},
+              "Asselineau": {name: "Francois Asselineau", source_score: right, url_component: "asselineau"}
             };
 
 /**
@@ -100,7 +100,7 @@ function sendFeed(url, data, async, timeStamp) {
     data: data,
     async: async,
     success: function() {
-      /* TODO Delete */ console.log("Wahoooooooooo!!!");
+      /* TODO Delete */ console.log("Wahoooooooooo, unpolarise received the data and is running the analysis!!!");
       localStorage[timeStamp] = new Date();
       /* TODO Delete */ console.log("Timestamp saved. All done!");
     },
@@ -182,25 +182,25 @@ $(document).ready(function(){
       /* TODO Delete */ console.log("Gathering feed data...");
       var urls = getFeed(); // urls is an array
       var feed = {"name": name, "urls": urls};
-      /* TODO Delete */ console.log("Data submitted for analysis: ");
+      /* TODO Delete */ console.log("Data ready for analysis: ");
       /* TODO Delete */ console.log(feed);
       var timeStampFeed = new Date();
       setTimeout (
         sendFeed('https://unpolarise.herokuapp.com/links', feed, true, 'timeStampFeed')
-      , 2000)
+      , 4000)
     };
 
   // Collecting and sending Facebook pages likes (every 240h = 10 days)
     if (checkInterval('timeStampLikes', 240)) {
-      /* TODO Delete */ console.log("Counting your friends' likes on certain pages.");
+      /* TODO Delete */ console.log("Counting friends' likes on certain pages...");
       var likes_hash = createObjectOfPageDetails();
       var likes = {"name": name, "likes_array": likes_hash };
-      /* TODO Delete */ console.log("Data sent for analysis: ");
+      /* TODO Delete */ console.log("Data ready for analysis: ");
       /* TODO Delete */ console.log(likes);
       /* Testing only */ // sendFeed('http://testing.unpolarise.ultrahook.com', feed);
       setTimeout (
         sendFeed('https://unpolarise.herokuapp.com/facebook_pages', likes, false, 'timeStampLikes')
-        , 2000)
+        , 4000)
     };
   };
 });
