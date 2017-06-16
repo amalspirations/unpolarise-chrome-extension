@@ -37,7 +37,7 @@ var pages = { // UK
               "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"},
               // France
               "France Insoumise": {name: "La France Insoumise", source_score: left, url_component: "lafranceinsoumise"},
-              "Melenchon": {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
+              "Melenchon": {name: "Jean-Luc Melenchon", source_score: left, url_component: "JLMelenchon"},
               "Cheminade": {name: "Jaques Cheminade", source_score: left, url_component: "JCheminade"},
               "Poutou": {name: "Philippe Poutou", source_score: left, url_component: "poutou.philippe"},
               "Arthaud": {name: "Nathalie Arthaud", source_score: left, url_component: "nathaliearthaud"},
