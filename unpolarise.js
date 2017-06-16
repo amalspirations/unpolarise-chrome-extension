@@ -16,61 +16,53 @@ var c_left = 0.25;
 var c_right = -0.25;
 var right = -1.0;
 // Pages
-var pages = { "Syriza": {name: "Syriza", source_score: left, url_component: "syrizaofficial"},
-              "Melenchon": {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
+var pages = { // UK
+              "Syriza": {name: "Syriza", source_score: left, url_component: "syrizaofficial"},
               "Corbyn": {name: "Jeremy Corbyn", source_score: left, url_component: "JeremyCorbynMP"},
               "Communist": {name: "Communist Party", source_score: left, url_component: "communism101"},
               "Labour": {name: "Labour Party", source_score: c_left, url_component: "labourparty"},
-              "Obama": {name: "Barack Obama", source_score: c_left, url_component: "barackobama"},
               "Sanders": {name: "Bernie Sanders", source_score: c_left, url_component: "berniesanders"},
-              "Clinton": {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
               "Sadiq": {name: "Sadiq Khan", source_score: c_left, url_component: "sadiqforlondon"},
               "DailyShow": {name: "Daily Show", source_score: c_left, url_component: "thedailyshow"},
               "Conservative": {name: "Conservative Party", source_score: c_right, url_component: "conservatives"},
               "Cameron": {name: "David Cameron", source_score: c_right, url_component: "DavidCameronOfficial"},
               "Boris": {name: "Boris Johnson", source_score: c_right, url_component: "borisjohnson"},
               "Kyle": {name: "Jeremy Kyle", source_score: c_right, url_component: "Jeremykyle"},
-              "LePen": {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
               "Farage": {name: "Nigel Farage", source_score: right, url_component: "nigelfarageofficial"},
               "UKIP": {name: "UKIP", source_score: right, url_component: "UKIP"},
               "BNP": {name: "BNP", source_score: right, url_component: "OfficialBritishNationalParty"},
-              "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"}
-};
-// Regex to get the name from Facebook
-// var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u']
-
-/**
- * Function that returns user Facebook full name as displayed
- * Original Amal
- */
-function getUser() {
-  while  (name === '' && document.getElementById('u_0_t') || name.includes("_")) {
-    name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '') };
-  return name;
-};
-
-/**
- * Function that returns user Facebook full name as displayed
- * Assuming either u_0_u or u_0_t holds the FB name
- */
-function getUser2() {
-  while (name === '' || name.includes("_")) {
-    if (document.getElementById('u_0_t')) {
-      if (document.getElementById('u_0_t').getElementsByTagName('a')[0] && document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label")) {
-        name = document.getElementById('u_0_t').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
-      } else if (document.getElementById('u_0_u')) {
-        name = document.getElementById('u_0_u').getElementsByTagName('a')[0].getAttribute("aria-label").replace('Profile of ', '');
-      };
-    };
-    return name;
-  };
-};
+              // US
+              "Obama": {name: "Barack Obama", source_score: c_left, url_component: "barackobama"},
+              "Clinton": {name: "Hillary Clinton", source_score: c_left, url_component: "hillaryclinton"},
+              "Trump": {name: "Donald Trump", source_score: right, url_component: "DonaldTrump"},
+              // France
+              "France Insoumise": {name: "La France Insoumise", source_score: left, url_component: "lafranceinsoumise"}
+              "Melenchon": {name: "Melenchon", source_score: left, url_component: "JLMelenchon"},
+              "Cheminade": {name: "Jaques Cheminade", source_score: left, url_component: "JCheminade"},
+              "Poutou": {name: "Philippe Poutou", source_score: left, url_component: "poutou.philippe"},
+              "Arthaud": {name: "Nathalie Arthaud", source_score: left, url_component: "nathaliearthaud"},
+              "PS": {name: "Parti Socialiste", source_score: left, url_component: "partisocialiste"},
+              "Hamon": {name: "Benoit Hamon", source_score: left, url_component: "hamonbenoit"},
+              "Hollande": {name: "Francois Hollande", source_score: c_left, url_component: "francoishollande.fr"},
+              "Valls": {name: "Manuel Valls", source_score: c_left, url_component: "manuelvalls"},
+              "Macron": {name: "Emmanuel Macron", source_score: c_left, url_component: "EmmanuelMacron"},
+              "Lasalle": {name: "Jean Lasalle", source_score: c_left, url_component: "lassalle.jean"},
+              "Juppe": {name: "Alain Juppe", source_score: c_right, url_component: "AlainJuppe"},
+              "Sarkozy": {name: "Nicolas Sarkozy", source_score: c_right, url_component: "nicolassarkozy"},
+              "Fillon": {name: "Francois Fillon", source_score: right, url_component: "francoisfillon"},
+              "Cope": {name: "Jean-Francois Cope", source_score: right, url_component: "jfcope"},
+              "Republicains": {name: "Les Republicains", source_score: right, url_component: "les.Republicains.FR"},
+              "LePen": {name: "Marine Le Pen", source_score: right, url_component: "MarineLePen"},
+              "FN": {name: "Front National", source_score: right, url_component: "FN.officiel"},
+              "Dupont-Aignan": {name: "Nicolas Dupont-Aignan", source_score: right, url_component: "nicolasdupontaignan"},
+              "Asselineau": {name: "Francois Asselineau", source_score: right, url_component: "asselineau"},
+            };
 
 /**
  * Function that returns user Facebook full name as displayed
  * Assuming that the identifier u_0_? can take any letter
  */
-function getUser3() {
+function getUser() {
   while (name === '' || name.includes("_")) {
     for (var i = 65; i <= 90; i++) { // 65 - 90
       var fb_id = 'u_0_' + String.fromCharCode(i).toLowerCase();
@@ -173,7 +165,7 @@ function createObjectOfPageDetails() {
 function checkInterval(timeStamp, interval) { // timeStamp = 'timeStampFeed' || 'timeStampLikes'
   var lastTime = localStorage[timeStamp];
   if (lastTime == null) { return true }
-  else { return ((new Date() - lastTime) >= (interval)) } // 3600000 Convert to hours with 36000000
+  else { return ((new Date() - lastTime) >= (interval * 3600000)) } // interval in milliseconds
 };
 
 // ---------- SCRIPT RUNNING ----------
@@ -182,7 +174,7 @@ $(document).ready(function(){
   // Script when active tab is Facebook
   if (facebookUrl.exec(currentUrl)) {
     /* TODO Delete */ console.log("Welcome!");
-    name = getUser3();
+    name = getUser();
     /* TODO Delete */ console.log("Your Facebook name: " + name);
 
     // Collecting and sending Facebook home feed (every 2h)
